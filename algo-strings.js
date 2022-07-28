@@ -26,20 +26,23 @@ reverseStr = (str) => {
 
         let temp;
 
-        if (testChar(strArr[start]) && testChar(strArr[end])) {
+        let isStartSpecial = testChar(strArr[start]);
+        let isEndSpecial = testChar(strArr[end]);
+
+        if (isStartSpecial && isEndSpecial) {
             start += 1;
             end -= 1;
         }
 
-        if (testChar(strArr[start]) && !testChar(strArr[end])) {
+        if (isStartSpecial && !isEndSpecial) {
             start += 1;
         }
 
-        if (!testChar(strArr[start]) && testChar(strArr[end])) {
+        if (!isStartSpecial && isEndSpecial) {
             end -= 1
         }
 
-        if (!testChar(strArr[start]) && !testChar(strArr[end])) {
+        if (!isStartSpecial && !isEndSpecial) {
             temp = strArr[end];
             strArr[end] = strArr[start];
             strArr[start] = temp;
@@ -61,8 +64,16 @@ reverseStr('Ab,c,de!$');
 
 // 02. All Possible Palindromic Partitions
 
-allPossiblePalindromicPartitions = (arr) => {
+allPossiblePalindromicPartitionsStr = (str) => {
     console.log('@reverseArr...');
+
+    for (let i = 0; i < str.length; i++) {
+        for (let j = 0; j < array.length; j++) {
+            
+        }
+        
+    }
+
     let results = [];
     return results;
 }
