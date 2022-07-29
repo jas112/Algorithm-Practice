@@ -56,27 +56,40 @@ reverseStr = (str) => {
 
 }
 
-reverseStr('asdfasd/.,fasdtgeg,(*)(&)&&)&*^LKHOGHOKJuhfufru(*&^&*&%*%');
+// reverseStr('asdfasd/.,fasdtgeg,(*)(&)&&)&*^LKHOGHOKJuhfufru(*&^&*&%*%');
 
-reverseStr('a@a#a$b%b^c&c*c(ddd!fff');
+// reverseStr('a@a#a$b%b^c&c*c(ddd!fff');
 
-reverseStr('Ab,c,de!$');
+// reverseStr('Ab,c,de!$');
 
 // 02. All Possible Palindromic Partitions
 
-allPossiblePalindromicPartitionsStr = (str) => {
-    console.log('@reverseArr...');
+allPosPalPartsStr = (str) => {
+    console.log(`@allPosPalPartsStr... target string: ${str}`);
+
+    let palindromicResults = [];
 
     for (let i = 0; i < str.length; i++) {
-        for (let j = 0; j < array.length; j++) {
-            
+        for (let j = 1; j < str.length + 1; j++) {
+            let strPartition = str.substring(i,j);
+            let revStrPartitionArr = [...strPartition].reverse();
+            let revStrPartition = revStrPartitionArr.join('');
+            let isPalindromic = strPartition === revStrPartition;
+            console.log(`i: ${i} | j: ${j} | strPartition: ${strPartition} | revStrPartition: ${revStrPartition} | isPalindromic: ${isPalindromic}`);
+            if (isPalindromic) {
+                palindromicResults.push(strPartition);
+            }
         }
-        
     }
 
-    let results = [];
-    return results;
+    console.log(palindromicResults);
+
+    return palindromicResults;
 }
+
+// allPosPalPartsStr('allPosPalPartsStr');
+allPosPalPartsStr('tenet');
+allPosPalPartsStr('Partitions');
 
 // 03. Count triplets with sum smaller than a given value
 
