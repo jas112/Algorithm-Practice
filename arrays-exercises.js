@@ -16,10 +16,10 @@
 // output:
 //  [   
 //      [1, 0, 0, 0, 0, 0],
-//      [0, 1, 0, 1, 1, 1],
-//      [0, 0, 1, 0, 1, 0],
+//      [0, 0, 0, 1, 1, 1],
+//      [0, 0, 0, 0, 1, 0],
 //      [1, 1, 0, 0, 1, 0],
-//      [1, 0, 1, 1, 0, 0],
+//      [1, 0, 0, 0, 0, 0],
 //      [1, 0, 0, 0, 0, 1],
 //  ]
 //
@@ -36,7 +36,7 @@ generateArrDetails = (arr) => {
             let rowCoordValue = row;
             let columnCoordValue = column;
 
-            arrDetails[sqrId] = {'sqrId': sqrId, 'sqrValue': sqrValue, 'rowCoord': rowCoordValue, 'columnCoord': columnCoordValue}
+            arrDetails[sqrId] = {'sqrId': sqrId, 'sqrValue': sqrValue, 'row': rowCoordValue, 'column': columnCoordValue}
         } 
     }
 
@@ -48,7 +48,7 @@ determineAdjs = (arr,arrObj) => {
 
     arr.forEach(sqrId => {
         if(arrObj.hasOwnProperty(sqrId)){
-            determinedAdjs.push(sqrId);
+            determinedAdjs.push(arrObj[sqrId].sqrValue);
         }
     });
 
@@ -87,25 +87,51 @@ getAdjacents = (sqrId, arrObj) => {
 
 removeIslands = (arr) => {
 
-    console.log(`arr:`);
+    console.log(`arr before:`);
     console.log(arr);
 
     let arrDetails = generateArrDetails(arr);
 
-    console.log(`arrDetails:`);
-    console.log(JSON.stringify(arrDetails));
+    // console.log(`arrDetails:`);
+    // console.log(JSON.stringify(arrDetails));
 
     let squares = Object.keys(arrDetails);
 
-    console.log(`squares:`);
-    console.log(squares);
+    // console.log(`squares:`);
+    // console.log(squares);
 
     for (const key in arrDetails) {
+
         let adjs = getAdjacents(key, arrDetails);
-        arrDetails[key]['adjacents'] = adjs;
-        console.log(`${key} details:`);
-        console.log(`${JSON.stringify(arrDetails[key])}`);
+        let row = arrDetails[key]['row'];
+        let column = arrDetails[key]['column'];
+        let isEdgeRow = ((row === 0) || (row === (arr.length - 1)));
+        let isEdgeColumn = ((column === 0) || (column === (arr[0].length - 1)));
+        let isEdgePostion = isEdgeRow || isEdgeColumn;
+        let hasAdjOnes = adjs.includes(1);
+        let ChangeThisValue = !isEdgePostion && !hasAdjOnes;
+
+        // console.log(`key: ${key} | row: ${row} | column: ${column} | isEdgeRow:`);
+        // console.log(`isEdgeRow: ${isEdgeRow} | isEdgeColumn: ${isEdgeColumn} | isEdgePostion: ${isEdgePostion}`);
+        // console.log(`hasAdjOnes: ${hasAdjOnes} | ChangeThisValue: ${ChangeThisValue}`);
+
+        if(ChangeThisValue){
+            // console.log(`Not Changing this value!!!`);
+            arr[row][column] = 0;
+        }else{
+            // console.log(`Changing this value!!!`);
+            // arr[row][column] = 0;
+        }
+
+        // arrDetails[key]['adjacents'] = adjs;
+        // console.log(`${key} details:`);
+        // console.log(`${JSON.stringify(arrDetails[key])}`);
     }
+
+    console.log(`arr after:`);
+    console.log(arr);
+
+    return arr;
 
 }
 
