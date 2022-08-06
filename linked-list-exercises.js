@@ -1,5 +1,6 @@
-// reverse linked list returning only the new head...
-// a > b > c > d => d > c > b > a
+// linked list exercises...
+
+// linked list node...
 
 class Node{
     constructor(val){
@@ -8,14 +9,17 @@ class Node{
     }
 }
 
+// linked list class...
+
 class SinglyLinkedList{
-    constructor(){
+    contructor(){
         this.head = null;
         this.tail = null;
         this.length = 0;
     }
-    push(val){
-        var newNode = new Node(val);
+
+    push = (val) => {
+        let newNode = new Node(val);
         if(!this.head){
             this.head = newNode;
             this.tail = this.head;
@@ -23,35 +27,39 @@ class SinglyLinkedList{
             this.tail.next = newNode;
             this.tail = newNode;
         }
-        this.length++;
+        this.length += 1;
+        
         return this;
     }
-    pop(){
 
+    pop = () => {
         if(!this.head) return undefined;
-
-        let currentNode = this.head;
-        let newTail = currentNode;
-
-        while(currentNode.next){
-            newTail = currentNode;
-            currentNode = currentNode.next;
-        }
-
-        this.tail = newTail;
-        this.tail.next = null;
-        this.length--;
 
         if(this.length === 0){
             this.head = null;
             this.tail = null;
         }
 
-        return this;
-    }
-    shift(){
+        let current = this.head;
+        let newTail = current;
 
+        while (current.next) {
+            newTail = current;
+            current = current.next;
+        }
+
+        this.tail = newTail;
+        this.tail.next = null;
+        this.length--;
+
+        return this;
+
+    }
+
+    shift = () => {
+        
         if(!this.head) return undefined;
+
         let currentHead = this.head;
         this.head = currentHead.next;
         this.length--;
@@ -62,83 +70,140 @@ class SinglyLinkedList{
 
         return currentHead;
     }
-    unshift(val){
+
+    unshift = (val) => {
+
         let newNode = new Node(val);
+
         if(!this.head){
             this.head = newNode;
-            this.tail = this.head;
+            this.tail = this.head
         }else{
             newNode.next = this.head;
             this.head = newNode;
         }
+
         this.length++;
+
         return this;
     }
-    get(idx){
-        if(idx < 0 || idx >= this.length) return null;
-        var counter = 0;
-        var currentNode = this.head;
-        // console.log(`currentNode: ${JSON.stringify(currentNode)}`);
-        while (counter !== idx) {
-            // console.log(`counter: ${counter}`);
-            // console.log(`currentNode: ${JSON.stringify(currentNode)}`);
+
+    get = (idx) => {
+
+        let isIdxInValid = (idx < 0 || idx >= this.length);
+        
+        if(isIdxInValid) return null;
+
+        let counter = 0;
+        let currentNode = this.head;
+
+        while(counter !== idx){
             currentNode = currentNode.next;
             counter++;
         }
+
         return currentNode;
+
     }
-    set(idx, val){
-        var targetNode = this.get(idx);
+
+    set = (idx, val) => {
+
+        let targetNode = this.get(idx);
+
         if(targetNode){
-            targetNode.val = val;
-            return true;
+           targetNode.val = val; 
+           return true;
         }
+        
         return false;
     }
-    insert(idx, val){
-        var newNode = new Node(val);
-        if(idx < 0 || idx > this.length) return null;
 
-        if(idx === this.length) !!this.push(val);
-        if(idx === 0) !!this.unshift(val);
+    insert = (idx, val) => {
 
-        if(idx > 0 && idx < this.length){
-            var prevN = this.get(idx-1);
-            var nextN = this.get(idx);
-            prevN.next = newNode;
-            newNode.next = nextN;
+        let isIdxInValid = (idx < 0 || idx > this.length);
+        if(isIdxInValid) return null;
+
+        let new_node = new Node(val);
+
+        if(idx === 0){
+            this.unshift(val);
+        }
+
+        if(idx === this.length){
+            this.push(val);
+        }
+
+        let isIdxContainedWithin = (idx > 0 && idx < this.length);
+
+        if(isIdxContainedWithin){
+
+            let prev_node = this.get(idx-1);
+            let next_node = this.get(idx);
+
+            prev_node.next = new_node;
+            new_node.next = next_node
+
             this.length++;
+
             return true;
         }
+
     }
-    remove(idx){
-        if(idx < 0 || idx > this.length) return undefined;
-        if(idx === this.length-1) this.pop();
-        if(idx === 0) this.shift();
-        if(idx > 0 && idx < this.length){
-            var prevN = this.get(idx-1);
-            var nextN = this.get(idx+1);
-            var targetNode = prevN.next;
-            prevN.next = nextN;
+
+    remove = (idx) => {
+
+        let isIdxInValid = (idx < 0 || idx > this.length);
+        if(isIdxInValid) return null;
+
+        if(idx === 0){
+            this.shift();
+        }
+
+        if(idx === this.length-1){
+            this.pop();
+        }
+
+        let isIdxContainedWithin = (idx > 0 && idx < this.length);
+
+        if(isIdxContainedWithin){
+
+            let prev_node = this.get(idx-1);
+            let next_node = this.get(idx+1);
+            let removed_node = prev_node.next;
+
+            prev_node.next = next_node;
+
             this.length--;
-            return targetNode;
+
+            return removed_node;
         }
+
     }
-    reverse(){
-        var current = this.head;
+
+    reverse = () => {
+        var current_node = this.head;
         this.head = this.tail;
-        this.tail = current;
-        var next;
-        var prev = null;
-        for(var i = 0; i < this.length; i++){
-            next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
-            return this;
+        this.tail = current_node;
+        var next_node;
+        var prev_node = null;
+
+        while (current_node.next) {
+
+            next_node = current_node.next;
+            current_node.next = prev_node;
+            prev_node = current_node;
+            current_node = next_node;
+            
         }
+
+        return this;
+
     }
+
 }
+
+// reverse linked list returning only the new head...
+// a > b > c > d => d > c > b > a
 
 // reverse linked list given only the head of the ll....return the new head node.
 
