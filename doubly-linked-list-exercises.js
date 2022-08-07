@@ -195,12 +195,37 @@ class DoublyLinkedList{
 
     reverse = () => {
 
+        var current = this.head;
+        this.head = this.tail;
+        this.tail = current;
+        var next_node;
+        var prev_node;
 
+        for (let idx = 0; idx < this.length; idx++) {
+            
+            next_node = current.prev;
+            prev_node = current.next;
+            current.prev = prev_node;
+            current.next = next_node;
+            current = prev_node;
+        }
+
+        return this;
     }
 
     print = () => {
-    
+ 
+        var print_result = [];
+        var current_node = this.head;
 
+        for (let idx = 0; idx < this.length; idx++) {
+
+            var node_val = current_node.val;
+            print_result.push(node_val);
+            current_node = current_node.next;
+        }
+
+        return print_result;
     }
     
 }

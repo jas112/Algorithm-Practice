@@ -107,24 +107,60 @@ zigZagArr = (arr) => {
     return results;
 }
 
-// 05. Generate all possible sorted arrays from alternate elements of two given sorted arrays
+// 5. Reverse an array without affecting special characters
 
+// Input:   str = "a,b$c"
+// Output:  str = "c,b$a"
 
+// Input:   str = "Ab,c,de!$"
+// Output:  str = "ed,c,bA!$"
 
-// 06. Pythagorean Triplet in an array
+function isAlphaNum(charStr){
+    var charCodeValue = charStr.charCodeAt();
+    if (!(charCodeValue > 47 && charCodeValue < 58) && // numeric (0-9)
+        !(charCodeValue > 64 && charCodeValue < 91) && // upper alpha (A-Z)
+        !(charCodeValue > 96 && charCodeValue < 123)) { // lower alpha (a-z)
+      return false;
+    }
+    return true;
+}
 
+function abcReverse(str){
+    var temp = [];
+    var result = '';
 
+    console.log(`input string: ${str}`);
 
-// 07. Length of the largest subarray with contiguous elements
+    for(var i = 0; i < str.length; i++){
+        var isAlphaNumeric = isAlphaNum(str[i]);
+        console.log(`character: ${str[i]} | isAlphaNumeric: ${isAlphaNumeric}`)
+        if(isAlphaNumeric){
+            temp.push(str[i]);
+            console.log(`temp[]: ${temp}`);
+        }
+    }
 
+    temp.reverse();
+    console.log(`temp[]: ${temp}`);
 
+    for(var j = 0; j < str.length; j++){
+        var isAlphaNumeric = isAlphaNum(str[j]);
+        console.log(`character str[j]: ${str[j]} | isAlphaNumeric: ${isAlphaNumeric}`)
+        if(isAlphaNumeric){
+            result += temp[0];
+            temp.shift();
+            console.log(`result: ${result}`);
+            console.log(`temp[]: ${temp}`);
+        }else{
+            result += str[j];
+        }
+    }
 
-// 08. Find the smallest positive integer value that cannot be represented as sum of any subset of a given array
+    console.log(`output result: ${result}`)
 
+    return result;
+}
 
+abcReverse('Ab,c,de!$');
 
-// 09. Smallest subarray with sum greater than a given value
-
-
-
-// 10. Stock Buy Sell to Maximize Profit
+abcReverse("a!!!b.c.d,e'f,ghi");
