@@ -139,6 +139,9 @@ class Graph{
                 });
             }
         }
+
+        bfsHelper(startingVertex);
+        return results
     }
 }
 
